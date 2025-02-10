@@ -59,6 +59,7 @@
     "@angular/compiler-cli": "^14.2.12",
     "@angular/language-service": "14.2.12",
     "@applitools/eyes-playwright": "^1.36.0",
+    "@argos-ci/playwright": "^4.1.0",
     "@compodoc/compodoc": "^1.1.19",
     "@fortawesome/fontawesome-free": "^5.2.0",
     "@playwright/test": "^1.50.1",

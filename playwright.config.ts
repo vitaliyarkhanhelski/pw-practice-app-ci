@@ -2,7 +2,7 @@ import { EyesFixture } from '@applitools/eyes-playwright/fixture';
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig<EyesFixture>({
-  reporter: [['@applitools/eyes-playwright/reporter'], ['html']],
+  // reporter: [['@applitools/eyes-playwright/reporter'], ['html']],
   testDir: './tests',
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -13,7 +13,20 @@ export default defineConfig<EyesFixture>({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  // reporter: 'html',
+  reporter: [
+    process.env.CI ? ["dot"] : ["list"],
+    [
+      "@argos-ci/playwright/reporter",
+      {
+        // Upload to Argos on CI only.
+        uploadToArgos: !!process.env.CI,
+
+        // Set your Argos token (required if not using GitHub Actions).
+        token: "argos_ca5875f05e2169a54d113f802f9e42a9bc",
+      },
+    ],
+    ['html']
+  ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Configuration for Eyes VisualAI */
@@ -40,6 +53,7 @@ export default defineConfig<EyesFixture>({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
     baseURL: 'http://localhost:4200/',
+    screenshot: "only-on-failure",
   },
 
   /* Configure projects for major browsers */
@@ -88,3 +102,6 @@ export default defineConfig<EyesFixture>({
     // reuseExistingServer: !process.env.CI,
   },
 });
+
+
+//ARGOS_TOKEN=argos_ca5875f05e2169a54d113f802f9e42a9bc
