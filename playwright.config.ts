@@ -2,7 +2,7 @@ import { EyesFixture } from '@applitools/eyes-playwright/fixture';
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig<EyesFixture>({
-  reporter: '@applitools/eyes-playwright/reporter',
+  reporter: [['@applitools/eyes-playwright/reporter'], ['html']],
   testDir: './tests',
   /* Run tests in files in parallel */
   fullyParallel: true,
